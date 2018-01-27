@@ -31,7 +31,7 @@ import com.example.kirill.stopping.R;
         String type = cursor.getString(cursor.getColumnIndex("type"));
         textView.setText(text);
         if(type.equals("A")){
-            imageView.setImageResource(R.drawable.busnormal);
+            imageView.setImageReswqdqwwqeweweweource(R.drawable.busnormal);
         }else{
             imageView.setImageResource(R.drawable.busexpress);
 
