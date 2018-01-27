@@ -16,7 +16,6 @@ import com.example.kirill.stopping.DatabaseHelper;
 import com.example.kirill.stopping.R;
 import java.util.List;
 
-
 public class NearHaltAdapter extends ArrayAdapter<String> {
     private List<String> nearHaltList;
     List<String> IdList;
@@ -42,7 +41,6 @@ public class NearHaltAdapter extends ArrayAdapter<String> {
         dataBaseConnection.create_db();
         database = dataBaseConnection.open();
     }
-
 
     @NonNull
     @Override
