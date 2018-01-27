@@ -27,7 +27,6 @@ public class NearHaltAdapter extends ArrayAdapter<String> {
     private TextView transport2;
     private String bus ;
     private String troll;
-    DatabaseHelper dbHelper;
     SQLiteDatabase database;
     busStopsDatabase dataBaseConnection;
 
