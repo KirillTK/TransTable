@@ -24,11 +24,8 @@ public class FavouriteAdapter extends ArrayAdapter<String> {
     private  List<String> type;
     private  List<String> busnumber;
     private Context context;
-
     private DatabaseHelper dbHelper;
     private SQLiteDatabase database;
-
-
 
     public FavouriteAdapter(Context context, List<String> namestations,  List<String> busnumber, List<String> Route,List<String> type){
         super(context, R.layout.favouritefadapter, namestations);
@@ -54,7 +51,6 @@ public class FavouriteAdapter extends ArrayAdapter<String> {
             case "Т": imageTransport.setImageResource(R.drawable.busexpress);break;
 
         }
-
         TextView textRoute = (TextView)rowView.findViewById(R.id.route);
         textRoute.setText(Route.get(position));
         TextView namestation = (TextView) rowView.findViewById(R.id.namestationID);
@@ -63,6 +59,4 @@ public class FavouriteAdapter extends ArrayAdapter<String> {
         busnumber.setText(this.busnumber.get(position));
         return rowView;
     }
-
-
 }
