@@ -25,8 +25,8 @@ import com.example.kirill.stopping.R;
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        TextView textView = view.findViewById(R.id.busID);
-        ImageView imageView = view.findViewById(R.id.busTypeIcon);
+        TextView textView = (TextView) view.findViewById(R.id.busID);
+        ImageView imageView = (ImageView) view.findViewById(R.id.busTypeIcon);
         String text = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_NUMBER));
         String type = cursor.getString(cursor.getColumnIndex("type"));
         textView.setText(text);
