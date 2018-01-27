@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:weightSum="1">
+
+    <TextView
+        android:id="@+id/namestationID"
+        android:layout_width="250dp"
+        android:layout_height="25dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/imageHalt"
+        android:layout_toRightOf="@+id/imageHalt"
+        android:fontFamily="sans-serif"
+        android:gravity="center_vertical"
+        android:text="Малиновка"
+        android:textColor="@color/Elements"
+        android:textSize="15sp"
+        android:textStyle="bold"></TextView>
+
+    <TextView
+        android:id="@+id/transport"
+        android:layout_width="215dp"
+        android:layout_height="17.5dp"
+        android:layout_below="@+id/namestationID"
+        android:layout_centerHorizontal="true"
+        android:fontFamily="sans-serif"
+        android:text="104 А , 10Т"
+        android:textColor="@color/Elements"
+        android:textSize="11sp"></TextView>
+
+
+    <ImageView
+        android:id="@+id/imageHalt"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        app:srcCompat="@drawable/ic_place_black_24dp" />
+
+    <TextView
+        android:id="@+id/near"
+        android:layout_width="30dp"
+        android:layout_height="25dp"
+        android:layout_alignBottom="@+id/trolltype"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/transport"
+        android:layout_toEndOf="@+id/transport"
+        android:layout_toRightOf="@+id/transport"
+        android:fontFamily="sans-serif"
+        android:text="Через 100 м"
+        android:textColor="@color/Elements"
+        android:textSize="12sp"
+        android:textStyle="bold"></TextView>
+
+    <TextView
+        android:id="@+id/bustype"
+        android:layout_width="10dp"
+        android:layout_height="17.5dp"
+        android:layout_alignBaseline="@+id/transport"
+        android:layout_alignBottom="@+id/transport"
+        android:layout_toEndOf="@+id/imageHalt"
+        android:layout_toRightOf="@+id/imageHalt"
+        android:text="A"
+        android:textColor="@color/red"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/trolltype"
+        android:layout_width="10dp"
+        android:layout_height="17.5dp"
+        android:layout_alignBaseline="@+id/transport2"
+        android:layout_alignBottom="@+id/transport2"
+        android:layout_toEndOf="@+id/imageHalt"
+        android:layout_toRightOf="@+id/imageHalt"
+        android:text="T"
+        android:textColor="@color/troll"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/transport2"
+        android:layout_width="215dp"
+        android:layout_height="17.5dp"
+        android:layout_alignLeft="@+id/transport"
+        android:layout_alignStart="@+id/transport"
+        android:layout_below="@+id/transport"
+        android:text="104 А , 10Т"
+        android:textColor="@color/Elements"
+        android:textSize="11sp">
+    </TextView>
+
+</RelativeLayout>

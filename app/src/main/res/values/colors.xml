@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="bus">#5eb4fc</color>
+    <color name="pink">#FF80AB</color>
+    <color name="red">#ff2033</color>
+    <color name="troll">#50b655</color>
+    <color name="wite">#ffffff</color>
+    <color name="favorite">#efb323</color>
+    <color name="mapColor">#0c70da</color>
+    <color name="near">#4DD0E1</color>
+    <color name="colorPrimary">#5eb4fc</color>
+    <color name="colorPrimaryDark">#096fc1</color>
+    <color name="colorPrimaryDark2">#5eb4fc</color>
+    <color name="colorPrimaryDark3">#ecdb40</color>
+    <color name="colorAccent">#ffffff</color>
+    <color name="transparent">#80000000</color>
+    <color name="Elements">#000000</color>
+    <color name="activeElement">#fdd300</color>
+</resources>
