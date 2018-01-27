@@ -17,8 +17,6 @@ import com.like.LikeButton;
 import com.like.OnLikeListener;
 import java.util.List;
 
-
-
 public class BusStopsAdapter extends CursorAdapter {
 
     private Cursor cursor;
@@ -35,7 +33,6 @@ public class BusStopsAdapter extends CursorAdapter {
     private List<String> RouteId;
     private List<String> typeID;
     private List<String> numberId;
-
 
     public BusStopsAdapter(Context context, Cursor cursor, List<Stations> stationsList,List<String> haltID,List<String> numberId,String route,String type) {
         super(context, cursor, 0);
@@ -54,14 +51,13 @@ public class BusStopsAdapter extends CursorAdapter {
         return LayoutInflater.from(context).inflate(R.layout.stations_layout, parent, false);
     }
 
-
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             convertView = ((LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE)).inflate(R.layout.stations_layout, null);
         }
-        TextView textView = convertView.findViewById(R.id.stationName);
-        ImageView imageView = convertView.findViewById(R.id.busStopIcon);
+        TextView textView = (TextView) convertView.findViewById(R.id.stationName);
+        ImageView imageView = (ImageView) convertView.findViewById(R.id.busStopIcon);
         textView.setText(stationsList.get(position).getStations());
         switch (typestr){
             case "A":        if (position == 0) {
@@ -83,7 +79,7 @@ public class BusStopsAdapter extends CursorAdapter {
             break;
         }
 
-        LikeButton button = convertView.findViewById(R.id.star_button);
+        LikeButton button = (LikeButton) convertView.findViewById(R.id.star_button);
         button.setLiked(Boolean.valueOf(this.context.getSharedPreferences("Favourite",Context.MODE_PRIVATE).getBoolean(haltId.get(position), false)));
         button.setOnLikeListener(new OnLikeListener() {
             @Override
