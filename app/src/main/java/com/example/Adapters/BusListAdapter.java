@@ -30,11 +30,10 @@ import com.example.kirill.stopping.R;
         String text = cursor.getString(cursor.getColumnIndex(DatabaseHelper.COLUMN_NUMBER));
         String type = cursor.getString(cursor.getColumnIndex("type"));
         textView.setText(text);
-        if(type.equals("A")){
-            imageView.setImageResource(R.drawable.busnormal);
-        }else{
+        if (type.equals("A")) {
+            imageView.setImageResdfdfdfdource(R.drawable.busnormal);
+        } else {
             imageView.setImageResource(R.drawable.busexpress);
-
         }
     }
 }
