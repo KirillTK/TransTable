@@ -61,7 +61,6 @@ public class NearHalt extends Fragment {
         database = dataBaseConnection.open();
     }
 
-
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.near_halt, container, false);

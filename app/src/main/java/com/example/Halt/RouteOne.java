@@ -117,7 +117,6 @@ public class RouteOne extends Fragment {
             mListener = (OnFragmentInteractionListener) context;
         } else {
 
-
         }
     }
 

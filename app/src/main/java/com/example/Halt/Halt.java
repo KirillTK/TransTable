@@ -22,7 +22,6 @@ import com.example.kirill.stopping.R;
 
 public class Halt extends AppCompatActivity {
 
-
     private SectionsPagerAdapter mSectionsPagerAdapter;
     DatabaseHelper dbHelper;
     SQLiteDatabase database;
@@ -98,9 +97,7 @@ public class Halt extends AppCompatActivity {
                 tabLayout.setBackgroundColor(getResources().getColor(R.color.near));
                 break;
         }
-
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -122,14 +119,12 @@ public class Halt extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-
     public static class PlaceholderFragment extends Fragment {
 
         private static final String ARG_SECTION_NUMBER = "section_number";
 
         public PlaceholderFragment() {
         }
-
 
         public static PlaceholderFragment newInstance(int sectionNumber) {
             PlaceholderFragment fragment = new PlaceholderFragment();

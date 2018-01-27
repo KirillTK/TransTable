@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-
 public class Favoutite_fragment extends Fragment {
     private ListView favourits;
     private DatabaseHelper dbHelper;
@@ -28,7 +27,6 @@ public class Favoutite_fragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private String mParam1;
     private String mParam2;
-
     private OnFragmentInteractionListener mListener;
 
     public static Favoutite_fragment newInstance(String param1, String param2) {
@@ -77,7 +75,6 @@ public class Favoutite_fragment extends Fragment {
 
         }
 
-
         SharedPreferences Type = getContext().getSharedPreferences("Type", Context.MODE_PRIVATE);
         final List<String> type = new ArrayList<String>();
         Map<String,?> typeMap = Type.getAll();
@@ -102,7 +99,6 @@ public class Favoutite_fragment extends Fragment {
                 startActivityForResult(intent, 1);
             }
         });
-
         return view;
     }
 
@@ -131,5 +127,4 @@ public class Favoutite_fragment extends Fragment {
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
     }
-
 }

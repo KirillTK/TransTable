@@ -7,11 +7,9 @@ import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.example.Map.mapViewer;
 
-
 public class Main_activity extends AppCompatActivity {
     Toolbar toolbar;
     BottomNavigationBar bottomNavigationBar;
-
 
     private BottomNavigationBar.OnTabSelectedListener  mOnNavigationItemSelectedListener = new BottomNavigationBar.OnTabSelectedListener() {
         @Override
@@ -35,7 +33,6 @@ public class Main_activity extends AppCompatActivity {
         public void onTabReselected(int position) {
 
         }
-
     };
 
     private void refresh(){

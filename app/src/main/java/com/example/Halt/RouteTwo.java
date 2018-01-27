@@ -113,7 +113,6 @@ public class RouteTwo extends Fragment {
             mListener = (OnFragmentInteractionListener) context;
         } else {
 
-
         }
     }
 

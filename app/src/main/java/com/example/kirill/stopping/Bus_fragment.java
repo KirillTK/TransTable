@@ -28,7 +28,6 @@ public class Bus_fragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     public static String number;
 
-
     public static Bus_fragment newInstance(String param1, String param2) {
         Bus_fragment fragment = new Bus_fragment();
         Bundle args = new Bundle();
@@ -73,8 +72,6 @@ public class Bus_fragment extends Fragment {
         return view;
     }
 
-
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -89,7 +86,6 @@ public class Bus_fragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
-
 
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name

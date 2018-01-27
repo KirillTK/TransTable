@@ -7,12 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 import com.example.kirill.stopping.R;
-
-import org.w3c.dom.Text;
-
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -20,7 +16,6 @@ import java.util.List;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-
 
 public class TimeAdapter extends ArrayAdapter<String> {
     private final Context context;
@@ -57,7 +52,6 @@ public class TimeAdapter extends ArrayAdapter<String> {
             e.printStackTrace();
         }
         textView.setText(values.get(position));
-
         if (hour==(Calendar.getInstance().getTime().getHours()))
         {
             switch (type){
