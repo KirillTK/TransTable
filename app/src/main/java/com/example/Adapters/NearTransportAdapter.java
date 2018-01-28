@@ -22,9 +22,6 @@ public class NearTransportAdapter extends CursorAdapter{
 
     public NearTransportAdapter(Context context, Cursor c) {
         super(context, c, 0);
-        dbHelper = new DatabaseHelper(context);
-        dbHelper.create_db();
-        database = dbHelper.open();
     }
 
     @Override
@@ -34,15 +31,14 @@ public class NearTransportAdapter extends CursorAdapter{
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
+        dbHelper = new DatabaseHelper(context);
+        dbHelper.create_db();
+        database = dbHelper.open();
         TextView textView = (TextView) view.findViewById(R.id.busID);
         ImageView imageView = (ImageView) view.findViewById(R.id.busTypeIcon);
-        imageView.setImageResource(R.drawable.busnormal);
-        Transport = database.rawQuery("select  Halt.*,Transport.number from Halt,Transport where Halt.route = 'ДС Малиновка-4 - Брилевичи' and Halt.halt_transport = Transport._id and Halt.name = '"+cursor.getColumnIndex("NAME")+"' and Transport.number = '"+cursor.getColumnIndex("_id")+"' and Transport.type = '"+cursor.getColumnIndex("TYPE")+"'",null);
-        while (Transport.moveToNext()){
-            Log.d("sql", String.valueOf(Transport.getColumnIndex("number")));
-            textView.setText(Transport.getColumnIndex("number"));
-        }
-        Transport.close();
+        Transport = database.rawQuery("select Transport.number from Halt,Transport where Halt.route = 'ДС Малиновка-4 - Брилевичи' and Halt.halt_transport = Transport._id and Halt.name = '"+cursor.getColumnIndex("NAME")+"' and Transport.number = '"+cursor.getColumnIndex("_id")+"' and Transport.type = '"+cursor.getColumnIndex("TYPE")+"'",null);
+        Transport.moveToFirst();
+        textView.setText(String.valueOf(Transport.getColumnIndex("number")));
 
     }
 }
