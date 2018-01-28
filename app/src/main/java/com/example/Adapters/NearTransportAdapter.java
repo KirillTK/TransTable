@@ -19,10 +19,14 @@ public class NearTransportAdapter extends CursorAdapter{
     private DatabaseHelper dbHelper;
     private SQLiteDatabase database;
     private String halt;
+    private Cursor Transport;
 
     public NearTransportAdapter(Context context, Cursor c,String halt) {
         super(context, c, 0);
         this.halt = halt;
+        dbHelper = new DatabaseHelper(context);
+        dbHelper.create_db();
+        database = dbHelper.open();
     }
 
     @Override
@@ -32,16 +36,15 @@ public class NearTransportAdapter extends CursorAdapter{
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
-        dbHelper = new DatabaseHelper(context);
-        dbHelper.create_db();
-        database = dbHelper.open();
         TextView textView = (TextView) view.findViewById(R.id.busID);
         ImageView imageView = (ImageView) view.findViewById(R.id.busTypeIcon);
-        Cursor Transport = database.rawQuery("select  Halt._id,Halt.name,Halt.route,Transport.number from Halt,Transport where Halt.route = '"+cursor.getString(cursor.getColumnIndex("NAME"))+"' and Halt.halt_transport = Transport._id and Halt.name = '"+halt+"' and Transport.number = '"+cursor.getString(cursor.getColumnIndex("_id"))+"' and Transport.type = '"+cursor.getString(cursor.getColumnIndex("TYPE"))+"'",null);
-        while (Transport.moveToNext()){
-            String text = Transport.getString(Transport.getColumnIndex("number"));
-            Log.d("sql",text);
-            textView.setText(text);
-        }
+//        Transport = database.rawQuery("select Halt._id,Halt.name,Halt.route, Transport.number from Halt,Transport where Halt.route = '"+cursor.getString(cursor.getColumnIndex("NAME"))+"' and Halt.halt_transport = Transport._id and Halt.name = '"+halt+"' and Transport.number = '"+cursor.getString(cursor.getColumnIndex("_id"))+"' and Transport.type = '"+cursor.getString(cursor.getColumnIndex("TYPE"))+"'",null);
+//        while (Transport.moveToNext()){
+//            String text = Transport.getString(Transport.getColumnIndex(DatabaseHelper.COLUMN_NUMBER));
+//            Log.d("sql",text);
+//            textView.setText(text);
+//        }
+        textView.setText(halt);
+
     }
 }
