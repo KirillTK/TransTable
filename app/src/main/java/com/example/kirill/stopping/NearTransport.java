@@ -19,13 +19,10 @@ import java.util.List;
 public class NearTransport extends AppCompatActivity {
     private Toolbar toolbar;
     private Cursor busCursor;
-    private Cursor trollCursor;
     private List<String> halt_transport_bus;
-    private List<String> halt_transport_troll;
     DatabaseHelper dbHelper;
     SQLiteDatabase database;
     private GridView busGrid;
-    private GridView trollGrid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,40 +31,25 @@ public class NearTransport extends AppCompatActivity {
         dbHelper = new DatabaseHelper(getApplicationContext());
         database = dbHelper.open();
         halt_transport_bus = new ArrayList<>();
-        halt_transport_troll = new ArrayList<>();
         busGrid = (GridView)findViewById(R.id.busGrid);
-        trollGrid = (GridView)findViewById(R.id.trollGrid);
         String halt = getIntent().getExtras().getString("halt");
+        String id = getIntent().getExtras().getString("id");
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle(halt);
         toolbar.setBackgroundColor(getResources().getColor(R.color.near));
-        String sql = "select distinct number,type,Halt._id from  Transport,Halt where name ='"+ halt +"' and Transport._id = Halt.halt_transport and Transport.type = 'A'";
-        String sql2 = "select distinct * from  Transport,Halt where name ='"+ halt +"' and Transport._id = Halt.halt_transport and Transport.type = 'Т'";
+        String sql = "select distinct Routes.ID,Routes.TYPE from Coordinates,Routes where Coordinates.NAME = '"+halt+"' and Routes.STOPS like '%"+id+"%'";
         busCursor = database.rawQuery(sql,null);
-        trollCursor = database.rawQuery(sql2,null);
         BusListAdapter adapter = new BusListAdapter(getApplicationContext(), busCursor);
-        BusListAdapter adapter2 = new BusListAdapter(getApplicationContext(), trollCursor);
         busGrid.setAdapter(adapter);
         halt_transport_bus = getId(busCursor,halt_transport_bus,sql);
-        halt_transport_troll = getId(trollCursor,halt_transport_troll,sql2);
         busGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getApplicationContext(), Tab_time.class);
                 intent.putExtra("time", halt_transport_bus.get(i));
-                intent.putExtra("type", "N");
-                startActivityForResult(intent, 1);
-            }
-        });
-        trollGrid.setAdapter(adapter2);
-        trollGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getApplicationContext(), Tab_time.class);
-                intent.putExtra("time", halt_transport_troll.get(i));
                 intent.putExtra("type", "N");
                 startActivityForResult(intent, 1);
             }

@@ -120,6 +120,7 @@ public class NearHalt extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getContext(),NearTransport.class);
                 intent.putExtra("halt",nearHaltList.get(i));
+                intent.putExtra("id",IdList.get(i));
                 startActivityForResult(intent,1);
             }
         });
