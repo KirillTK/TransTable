@@ -16,12 +16,13 @@ import com.example.kirill.stopping.DatabaseHelper;
 import com.example.kirill.stopping.R;
 
 public class NearTransportAdapter extends CursorAdapter{
-    private Cursor Transport;
     private DatabaseHelper dbHelper;
     private SQLiteDatabase database;
+    private String halt;
 
-    public NearTransportAdapter(Context context, Cursor c) {
+    public NearTransportAdapter(Context context, Cursor c,String halt) {
         super(context, c, 0);
+        this.halt = halt;
     }
 
     @Override
@@ -36,9 +37,11 @@ public class NearTransportAdapter extends CursorAdapter{
         database = dbHelper.open();
         TextView textView = (TextView) view.findViewById(R.id.busID);
         ImageView imageView = (ImageView) view.findViewById(R.id.busTypeIcon);
-        Transport = database.rawQuery("select Transport.number from Halt,Transport where Halt.route = 'ДС Малиновка-4 - Брилевичи' and Halt.halt_transport = Transport._id and Halt.name = '"+cursor.getColumnIndex("NAME")+"' and Transport.number = '"+cursor.getColumnIndex("_id")+"' and Transport.type = '"+cursor.getColumnIndex("TYPE")+"'",null);
-        Transport.moveToFirst();
-        textView.setText(String.valueOf(Transport.getColumnIndex("number")));
-
+        Cursor Transport = database.rawQuery("select  Halt._id,Halt.name,Halt.route,Transport.number from Halt,Transport where Halt.route = '"+cursor.getString(cursor.getColumnIndex("NAME"))+"' and Halt.halt_transport = Transport._id and Halt.name = '"+halt+"' and Transport.number = '"+cursor.getString(cursor.getColumnIndex("_id"))+"' and Transport.type = '"+cursor.getString(cursor.getColumnIndex("TYPE"))+"'",null);
+        while (Transport.moveToNext()){
+            String text = Transport.getString(Transport.getColumnIndex("number"));
+            Log.d("sql",text);
+            textView.setText(text);
+        }
     }
 }

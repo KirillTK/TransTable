@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -45,7 +46,7 @@ public class NearTransport extends AppCompatActivity {
         toolbar.setBackgroundColor(getResources().getColor(R.color.near));
         String sql = "select distinct Routes._id,Routes.TYPE from Coordinates,Routes where Coordinates.NAME = '"+halt+"' and Routes.STOPS like '%"+id+"%'";
         busCursor = database.rawQuery(sql,null);
-        NearTransportAdapter adapter = new NearTransportAdapter(getApplicationContext(),busCursor);
+        NearTransportAdapter adapter = new NearTransportAdapter(getApplicationContext(),busCursor,halt);
         busGrid.setAdapter(adapter);
         halt_transport_bus = getId(busCursor,halt_transport_bus,sql);
         busGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
