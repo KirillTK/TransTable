@@ -54,11 +54,11 @@ public class NearHaltAdapter extends ArrayAdapter<String> {
         near.setText("Около "+Integer.toString(distance.get(position))+" м");
         bus = "";
         troll="";
-        Cursor busCursor = database.rawQuery("select distinct Routes.ID,Routes.TYPE from Coordinates,Routes where Coordinates.NAME = '"+nearHaltList.get(position)+"' and Routes.STOPS like '%"+IdList.get(position)+"%'",null);
+        Cursor busCursor = database.rawQuery("select distinct Routes._id,Routes.TYPE from Coordinates,Routes where Coordinates.NAME = '"+nearHaltList.get(position)+"' and Routes.STOPS like '%"+IdList.get(position)+"%'",null);
         while (busCursor.moveToNext()){
                 switch (busCursor.getString(busCursor.getColumnIndex("TYPE"))){
-                    case "A": if (bus.length()<35){bus+= busCursor.getString(busCursor.getColumnIndex("ID")) +" ";} break;
-                    case "Т": if (troll.length()<35){troll+= busCursor.getString(busCursor.getColumnIndex("ID")) +" ";} break;
+                    case "A": if (bus.length()<35){bus+= busCursor.getString(busCursor.getColumnIndex("_id")) +" ";} break;
+                    case "Т": if (troll.length()<35){troll+= busCursor.getString(busCursor.getColumnIndex("_id")) +" ";} break;
                 }
         }
         busCursor.close();

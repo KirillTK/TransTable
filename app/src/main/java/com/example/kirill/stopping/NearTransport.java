@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import com.example.Adapters.BusListAdapter;
+import com.example.Adapters.NearTransportAdapter;
+import com.example.Map.busStopsDatabase;
 import com.example.Time.Tab_time;
 import java.util.ArrayList;
 import java.util.List;
@@ -20,16 +22,17 @@ public class NearTransport extends AppCompatActivity {
     private Toolbar toolbar;
     private Cursor busCursor;
     private List<String> halt_transport_bus;
-    DatabaseHelper dbHelper;
     SQLiteDatabase database;
+    busStopsDatabase dataBaseConnection;
     private GridView busGrid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_near_transport);
-        dbHelper = new DatabaseHelper(getApplicationContext());
-        database = dbHelper.open();
+        dataBaseConnection = new busStopsDatabase(getApplicationContext());
+        dataBaseConnection.create_db();
+        database = dataBaseConnection.open();
         halt_transport_bus = new ArrayList<>();
         busGrid = (GridView)findViewById(R.id.busGrid);
         String halt = getIntent().getExtras().getString("halt");
@@ -40,9 +43,9 @@ public class NearTransport extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle(halt);
         toolbar.setBackgroundColor(getResources().getColor(R.color.near));
-        String sql = "select distinct Routes.ID,Routes.TYPE from Coordinates,Routes where Coordinates.NAME = '"+halt+"' and Routes.STOPS like '%"+id+"%'";
+        String sql = "select distinct Routes._id,Routes.TYPE from Coordinates,Routes where Coordinates.NAME = '"+halt+"' and Routes.STOPS like '%"+id+"%'";
         busCursor = database.rawQuery(sql,null);
-        BusListAdapter adapter = new BusListAdapter(getApplicationContext(), busCursor);
+        NearTransportAdapter adapter = new NearTransportAdapter(getApplicationContext(),busCursor);
         busGrid.setAdapter(adapter);
         halt_transport_bus = getId(busCursor,halt_transport_bus,sql);
         busGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
