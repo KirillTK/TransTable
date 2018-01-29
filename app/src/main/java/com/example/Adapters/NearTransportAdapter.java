@@ -36,22 +36,24 @@ public class NearTransportAdapter extends CursorAdapter{
     public void bindView(View view, Context context, Cursor cursor) {
         dbHelper = new DatabaseHelper(context);
         database = dbHelper.open();
+        String text = null;
         TextView textView = (TextView) view.findViewById(R.id.trasnportnumber);
         TextView route = (TextView) view.findViewById(R.id.route);
         ImageView imageView = (ImageView) view.findViewById(R.id.imageTransport);
         transport = database.rawQuery("select * from Halt,Transport where Halt.route = '"+cursor.getString(cursor.getColumnIndex("NAME"))+"' and Halt.halt_transport = Transport._id and Halt.name = '"+halt+"' and Transport.number = '"+cursor.getString(cursor.getColumnIndex("transport"))+"' and Transport.type = '"+cursor.getString(cursor.getColumnIndex("TYPE"))+"'",null);
         if (transport!=null && transport.getCount()>0){
             transport.moveToFirst();
-            String text = transport.getString(transport.getColumnIndex("number"));
-            textView.setText(text);
-            transport.close();
-        }
-        switch (cursor.getString(cursor.getColumnIndex("TYPE"))){
-            case "A": imageView.setImageResource(R.drawable.busnormal); break;
-            case "Т": imageView.setImageResource(R.drawable.busexpress);break;
-            default: imageView.setImageResource(R.drawable.busnormal); break;
-        }
-        route.setText(cursor.getString(cursor.getColumnIndex("NAME")));
+            text = transport.getString(transport.getColumnIndex("number"));
 
+            transport.close();
+            switch (cursor.getString(cursor.getColumnIndex("TYPE"))){
+                case "A": imageView.setImageResource(R.drawable.busnormal); break;
+                case "Т": imageView.setImageResource(R.drawable.busexpress);break;
+                default: imageView.setImageResource(R.drawable.busnormal); break;
+            }
+
+        }
+        textView.setText(text);
+        route.setText(cursor.getString(cursor.getColumnIndex("NAME")));
     }
 }
