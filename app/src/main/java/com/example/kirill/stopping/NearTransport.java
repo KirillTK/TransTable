@@ -44,7 +44,8 @@ public class NearTransport extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setTitle(halt);
         toolbar.setBackgroundColor(getResources().getColor(R.color.near));
-        String sql = "select distinct Routes._id,Routes.TYPE from Coordinates,Routes where Coordinates.NAME = '"+halt+"' and Routes.STOPS like '%"+id+"%'";
+        String sql = "select distinct Routes._id,Routes.transport,Routes.TYPE,Routes.NAME from Coordinates,Routes where Coordinates.NAME = '"+halt+"' and Routes.STOPS like '%"+id+"%'";
+        Log.d("sql",sql);
         busCursor = database.rawQuery(sql,null);
         NearTransportAdapter adapter = new NearTransportAdapter(getApplicationContext(),busCursor,halt);
         busGrid.setAdapter(adapter);

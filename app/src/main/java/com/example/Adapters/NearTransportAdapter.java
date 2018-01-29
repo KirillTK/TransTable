@@ -16,17 +16,15 @@ import com.example.kirill.stopping.DatabaseHelper;
 import com.example.kirill.stopping.R;
 
 public class NearTransportAdapter extends CursorAdapter{
+    private Cursor transport;
     private DatabaseHelper dbHelper;
     private SQLiteDatabase database;
     private String halt;
-    private Cursor Transport;
 
     public NearTransportAdapter(Context context, Cursor c,String halt) {
         super(context, c, 0);
         this.halt = halt;
-        dbHelper = new DatabaseHelper(context);
-        dbHelper.create_db();
-        database = dbHelper.open();
+
     }
 
     @Override
@@ -36,15 +34,17 @@ public class NearTransportAdapter extends CursorAdapter{
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
+        dbHelper = new DatabaseHelper(context);
+        database = dbHelper.open();
         TextView textView = (TextView) view.findViewById(R.id.busID);
         ImageView imageView = (ImageView) view.findViewById(R.id.busTypeIcon);
-//        Transport = database.rawQuery("select Halt._id,Halt.name,Halt.route, Transport.number from Halt,Transport where Halt.route = '"+cursor.getString(cursor.getColumnIndex("NAME"))+"' and Halt.halt_transport = Transport._id and Halt.name = '"+halt+"' and Transport.number = '"+cursor.getString(cursor.getColumnIndex("_id"))+"' and Transport.type = '"+cursor.getString(cursor.getColumnIndex("TYPE"))+"'",null);
-//        while (Transport.moveToNext()){
-//            String text = Transport.getString(Transport.getColumnIndex(DatabaseHelper.COLUMN_NUMBER));
-//            Log.d("sql",text);
-//            textView.setText(text);
-//        }
-        textView.setText(halt);
+        transport = database.rawQuery("select * from Halt,Transport where Halt.route = '"+cursor.getString(cursor.getColumnIndex("NAME"))+"' and Halt.halt_transport = Transport._id and Halt.name = '"+halt+"' and Transport.number = '"+cursor.getString(cursor.getColumnIndex("transport"))+"' and Transport.type = '"+cursor.getString(cursor.getColumnIndex("TYPE"))+"'",null);
+        if (transport!=null && transport.getCount()>0){
+            transport.moveToFirst();
+            String text = transport.getString(transport.getColumnIndex("number"));
+            textView.setText(text);
+            transport.close();
+        }
 
     }
 }
