@@ -28,17 +28,20 @@ public class NearTransport extends AppCompatActivity {
     SQLiteDatabase database;
     busStopsDatabase dataBaseConnection;
     private ListView busGrid;
+    private DatabaseHelper dbHelper;
+    private SQLiteDatabase database2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_near_transport);
         dataBaseConnection = new busStopsDatabase(getApplicationContext());
-        dataBaseConnection.create_db();
         database = dataBaseConnection.open();
+        dbHelper = new DatabaseHelper(getApplicationContext());
+        database2 = dbHelper.open();
         halt_transport_bus = new ArrayList<>();
         busGrid = (ListView)findViewById(R.id.listTransport);
-        String halt = getIntent().getExtras().getString("halt");
+        final String halt = getIntent().getExtras().getString("halt");
         String id = getIntent().getExtras().getString("id");
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -51,25 +54,27 @@ public class NearTransport extends AppCompatActivity {
         busCursor = database.rawQuery(sql,null);
         NearTransportAdapter adapter = new NearTransportAdapter(getApplicationContext(),busCursor,halt);
         busGrid.setAdapter(adapter);
-        halt_transport_bus = getId(busCursor,halt_transport_bus,sql);
         busGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getApplicationContext(), Tab_time.class);
-                intent.putExtra("time", halt_transport_bus.get(i));
+                intent.putExtra("time", Integer.toString(getId(i,halt)));
                 intent.putExtra("type", "N");
                 startActivityForResult(intent, 1);
             }
         });
     }
 
-    private List<String> getId(Cursor cursor, List<String> id ,String sql){
-        cursor = database.rawQuery(sql,null);
-        while (cursor.moveToNext()){
-            id.add(cursor.getString((cursor.getColumnIndex("_id"))));
+    private int getId(int position,String halt){
+        busCursor.move(position);
+        Cursor transport = database2.rawQuery("select Halt._id from Halt,Transport where Halt.route = '"+busCursor.getString(busCursor.getColumnIndex("NAME"))+"' and Halt.halt_transport = Transport._id and Halt.name = '"+halt+"' and Transport.number = '"+busCursor.getString(busCursor.getColumnIndex("transport"))+"' and Transport.type = '"+busCursor.getString(busCursor.getColumnIndex("TYPE"))+"'",null);
+        int id =0;
+        while (transport.moveToNext()){
+            id = transport.getInt(transport.getColumnIndex("_id"));
         }
-        cursor.close();
-        return id;
+        busCursor.close();
+        transport.close();
+      return id;
     }
 
     @Override
