@@ -29,15 +29,16 @@ public class NearTransportAdapter extends CursorAdapter{
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup viewGroup) {
-        return LayoutInflater.from(context).inflate(R.layout.buses_layout, viewGroup, false);
+        return LayoutInflater.from(context).inflate(R.layout.near_transport, viewGroup, false);
     }
 
     @Override
     public void bindView(View view, Context context, Cursor cursor) {
         dbHelper = new DatabaseHelper(context);
         database = dbHelper.open();
-        TextView textView = (TextView) view.findViewById(R.id.busID);
-        ImageView imageView = (ImageView) view.findViewById(R.id.busTypeIcon);
+        TextView textView = (TextView) view.findViewById(R.id.trasnportnumber);
+        TextView route = (TextView) view.findViewById(R.id.route);
+        ImageView imageView = (ImageView) view.findViewById(R.id.imageTransport);
         transport = database.rawQuery("select * from Halt,Transport where Halt.route = '"+cursor.getString(cursor.getColumnIndex("NAME"))+"' and Halt.halt_transport = Transport._id and Halt.name = '"+halt+"' and Transport.number = '"+cursor.getString(cursor.getColumnIndex("transport"))+"' and Transport.type = '"+cursor.getString(cursor.getColumnIndex("TYPE"))+"'",null);
         if (transport!=null && transport.getCount()>0){
             transport.moveToFirst();
@@ -45,6 +46,12 @@ public class NearTransportAdapter extends CursorAdapter{
             textView.setText(text);
             transport.close();
         }
+        switch (cursor.getString(cursor.getColumnIndex("TYPE"))){
+            case "A": imageView.setImageResource(R.drawable.busnormal); break;
+            case "Т": imageView.setImageResource(R.drawable.busexpress);break;
+            default: imageView.setImageResource(R.drawable.busnormal); break;
+        }
+        route.setText(cursor.getString(cursor.getColumnIndex("NAME")));
 
     }
 }

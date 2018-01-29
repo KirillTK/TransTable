@@ -12,6 +12,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ListView;
+
 import com.example.Adapters.BusListAdapter;
 import com.example.Adapters.NearTransportAdapter;
 import com.example.Map.busStopsDatabase;
@@ -25,7 +27,7 @@ public class NearTransport extends AppCompatActivity {
     private List<String> halt_transport_bus;
     SQLiteDatabase database;
     busStopsDatabase dataBaseConnection;
-    private GridView busGrid;
+    private ListView busGrid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +37,7 @@ public class NearTransport extends AppCompatActivity {
         dataBaseConnection.create_db();
         database = dataBaseConnection.open();
         halt_transport_bus = new ArrayList<>();
-        busGrid = (GridView)findViewById(R.id.busGrid);
+        busGrid = (ListView)findViewById(R.id.listTransport);
         String halt = getIntent().getExtras().getString("halt");
         String id = getIntent().getExtras().getString("id");
         toolbar = (Toolbar)findViewById(R.id.toolbar);
@@ -79,15 +81,10 @@ public class NearTransport extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-
         int id = item.getItemId();
-
-
         if (id == android.R.id.home) {
             finish();
         }
         return super.onOptionsItemSelected(item);
     }
-
-
 }

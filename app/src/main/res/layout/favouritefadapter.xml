@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/busnumber"
-        android:layout_width="60dp"
+        android:layout_width="80dp"
         android:layout_height="60dp"
         android:layout_alignParentTop="true"
         android:gravity="center"
@@ -20,6 +20,7 @@
         android:id="@+id/namestationID"
         android:layout_width="250dp"
         android:layout_height="30dp"
+        android:paddingStart="15dp"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/busnumber"
         android:layout_toRightOf="@+id/busnumber"
@@ -34,6 +35,7 @@
         android:id="@+id/route"
         android:layout_width="250dp"
         android:layout_height="30dp"
+        android:paddingStart="15dp"
         android:layout_below="@+id/namestationID"
         android:layout_toEndOf="@+id/busnumber"
         android:layout_toRightOf="@+id/busnumber"
