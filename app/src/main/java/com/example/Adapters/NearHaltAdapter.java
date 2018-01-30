@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.Map.busStopsDatabase;
@@ -25,6 +26,7 @@ public class NearHaltAdapter extends ArrayAdapter<String> {
     private TextView near;
     private TextView transport;
     private TextView transport2;
+    private ImageView nearImage;
     private String bus ;
     private String troll;
     SQLiteDatabase database;
@@ -50,6 +52,8 @@ public class NearHaltAdapter extends ArrayAdapter<String> {
         near = (TextView)rowView.findViewById(R.id.near);
         transport = (TextView)rowView.findViewById(R.id.transport);
         transport2 = (TextView)rowView.findViewById(R.id.transport2);
+        nearImage = (ImageView) rowView.findViewById(R.id.imageHalt);
+        nearImage.setImageResource(R.drawable.ic_place_black_24dp);
         namestation.setText(nearHaltList.get(position));
         near.setText("Около "+Integer.toString(distance.get(position))+" м");
         bus = "";

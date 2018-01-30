@@ -66,13 +66,12 @@ public class NearTransport extends AppCompatActivity {
     }
 
     private int getId(int position,String halt){
-        busCursor.move(position);
+        busCursor.moveToPosition(position);
         Cursor transport = database2.rawQuery("select Halt._id from Halt,Transport where Halt.route = '"+busCursor.getString(busCursor.getColumnIndex("NAME"))+"' and Halt.halt_transport = Transport._id and Halt.name = '"+halt+"' and Transport.number = '"+busCursor.getString(busCursor.getColumnIndex("transport"))+"' and Transport.type = '"+busCursor.getString(busCursor.getColumnIndex("TYPE"))+"'",null);
         int id =0;
-        while (transport.moveToNext()){
+        if(transport!=null && transport.moveToFirst()){
             id = transport.getInt(transport.getColumnIndex("_id"));
         }
-        busCursor.close();
         transport.close();
       return id;
     }
