@@ -104,7 +104,7 @@ public class mapViewer extends Fragment {
 
                         number = "36";
 
-                        userCursor = database.rawQuery("SELECT * FROM "+ tableNameRoutes +" WHERE "+ RouteIDMain +" = "+number+";",null);
+                        userCursor = database.rawQuery("SELECT * FROM "+ tableNameRoutes +" WHERE transport = "+number+";",null);
                         userCursor.moveToFirst();
                         String shapeID = userCursor.getString(userCursor.getColumnIndex(busStopsDatabase.RouteID));
 

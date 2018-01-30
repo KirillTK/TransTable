@@ -37,7 +37,7 @@ public class Main_activity extends AppCompatActivity {
 
     private void refresh(){
         bottomNavigationBar.clearAll();
-        bottomNavigationBar.setMode(4);
+        bottomNavigationBar.setMode(3);
         bottomNavigationBar.setBackgroundStyle(1);
         bottomNavigationBar
                 .addItem(new BottomNavigationItem(R.drawable.busrapid,null).setActiveColorResource(R.color.bus))

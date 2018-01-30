@@ -54,7 +54,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
     }
 
-    void create_db(){
+    public void create_db(){
         InputStream myInput = null;
         OutputStream myOutput = null;
 

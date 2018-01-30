@@ -16,51 +16,13 @@
         tools:layout_editor_absoluteX="8dp">
     </include>
 
-    <TextView
-        android:id="@+id/busList"
-        android:textColor="@color/red"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/toolbar"
-        android:textStyle="bold"
-        android:text="Автобусы"
-        tools:layout_editor_absoluteX="16dp"
-        tools:layout_editor_absoluteY="69dp" />
-
-    <GridView
+    <ListView
+        android:id="@+id/listTransport"
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:numColumns="5"
+        android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:scrollbars="none"
-        android:layout_below="@+id/busList"
-        android:id="@+id/busGrid" />
-
-    <TextView
-        android:id="@+id/trollList"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/busGrid"
-        android:layout_marginTop="9dp"
-        android:text="Троллейбусы"
-        android:textColor="@color/troll"
-        android:textStyle="bold" />
-
-    <GridView
-        android:id="@+id/trollGrid"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scrollbars="none"
-        android:numColumns="5"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/trollList"
-        android:layout_marginTop="9dp" />
+        android:layout_below="@+id/toolbar" />
 
 
 </RelativeLayout>
