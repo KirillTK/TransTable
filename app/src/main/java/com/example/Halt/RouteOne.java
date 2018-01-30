@@ -151,7 +151,7 @@ public class RouteOne extends Fragment {
 
     private List<String> getBusNamber(String numb){
         List<String> number = new ArrayList<>();
-        for(int i = 0; i<idCursor.getCount()-1;i++){
+        for(int i = 0; i<idCursor.getCount();i++){
             number.add(numb);
         }
         return number;
