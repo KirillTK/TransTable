@@ -44,7 +44,6 @@ public class NearTransportAdapter extends CursorAdapter{
         if (transport!=null && transport.getCount()>0){
             transport.moveToFirst();
             text = transport.getString(transport.getColumnIndex("number"));
-
             transport.close();
             switch (cursor.getString(cursor.getColumnIndex("TYPE"))){
                 case "A": imageView.setImageResource(R.drawable.busnormal); break;
