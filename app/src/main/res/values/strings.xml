@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TransTable Schedule</string>
+    <string name="app_name">TransTable</string>
     <string name="action_favourite">Favourite</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_main_activity">Main_activity</string>

@@ -7,15 +7,12 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
 import com.example.kirill.stopping.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -28,19 +25,13 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
-
 import java.util.ArrayList;
-
-import static com.example.Map.busStopsDatabase.RouteIDMain;
 import static com.example.Map.busStopsDatabase.ShapeID;
 import static com.example.Map.busStopsDatabase.tableName;
 import static com.example.Map.busStopsDatabase.tableNameRoutes;
 import static com.example.Map.busStopsDatabase.tableNameShapes;
 import static com.example.kirill.stopping.Bus_fragment.number;
 
-/**
- * Created by work on 16.12.2017.
- */
 
 public class mapViewer extends Fragment {
 
@@ -103,7 +94,6 @@ public class mapViewer extends Fragment {
                         dataBaseConnection = new busStopsDatabase(getContext());
                         dataBaseConnection.create_db();
                         database = dataBaseConnection.open();
-
                         number = "104";
                         userCursor = database.rawQuery("SELECT * FROM "+ tableNameRoutes +" WHERE transport = "+number+";",null);
                         userCursor.moveToFirst();
