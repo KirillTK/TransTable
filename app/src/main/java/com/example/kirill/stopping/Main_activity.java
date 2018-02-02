@@ -1,6 +1,9 @@
 package com.example.kirill.stopping;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
@@ -56,7 +59,6 @@ public class Main_activity extends AppCompatActivity {
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
         bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
         refresh();
         bottomNavigationBar.setTabSelectedListener(mOnNavigationItemSelectedListener);
