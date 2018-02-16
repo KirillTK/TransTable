@@ -38,6 +38,7 @@ public class RouteTwo extends Fragment {
     private String type;
     private String number;
     public String Route;
+    List<Stations> stationsList;
 
     private OnFragmentInteractionListener mListener;
 
@@ -80,7 +81,7 @@ public class RouteTwo extends Fragment {
             halt = getList("_id", idCursor);
             numberList = getBusNamber(number);
             numbeRoute = addRoute(idCursor, "Второй путь");
-            List<Stations> stationsList = new ArrayList<Stations>();
+            stationsList = new ArrayList<Stations>();
             stationsList = station(userCursor);
             BusStopsAdapter adapter = new BusStopsAdapter(getContext(), userCursor, stationsList, halt, numberList, Route, type);
             station = (ListView) view.findViewById(R.id.stoppingId);
@@ -92,6 +93,7 @@ public class RouteTwo extends Fragment {
                     Long num = l;
                     String number = num.toString();
                     intent.putExtra("time", number);
+                    intent.putExtra("station", stationsList.get(i).getStations());
                     intent.putExtra("type", type);
                     startActivityForResult(intent, 1);
                 }
