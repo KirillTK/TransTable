@@ -5,8 +5,7 @@
     android:id="@+id/main_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    tools:context="com.example.kirill.stopping.com.example.Time.Tab_time">
+    android:fitsSystemWindows="true">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appbar"
@@ -21,7 +20,10 @@
             android:layout_width="match_parent"
             android:layout_height="34dp"
             tools:layout_editor_absoluteX="8dp"
-            tools:layout_editor_absoluteY="0dp"></include>
+            tools:layout_editor_absoluteY="0dp"
+            app:layout_scrollFlags="scroll|enterAlways"
+            >
+        </include>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tabs"

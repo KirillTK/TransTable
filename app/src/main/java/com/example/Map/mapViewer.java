@@ -1,17 +1,18 @@
 package com.example.Map;
 
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
-
 import com.example.kirill.stopping.R;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -24,19 +25,13 @@ import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
-
 import java.util.ArrayList;
-
-import static com.example.Map.busStopsDatabase.RouteIDMain;
 import static com.example.Map.busStopsDatabase.ShapeID;
 import static com.example.Map.busStopsDatabase.tableName;
 import static com.example.Map.busStopsDatabase.tableNameRoutes;
 import static com.example.Map.busStopsDatabase.tableNameShapes;
 import static com.example.kirill.stopping.Bus_fragment.number;
 
-/**
- * Created by work on 16.12.2017.
- */
 
 public class mapViewer extends Fragment {
 
@@ -52,7 +47,6 @@ public class mapViewer extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.map, container, false);
-
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
 
@@ -65,25 +59,25 @@ public class mapViewer extends Fragment {
         }
 
 
-
         mMapView.getMapAsync(new OnMapReadyCallback() {
             @Override
             public void onMapReady(final GoogleMap mMap) {
-
                 UiSettings currentUiSettings = mMap.getUiSettings();
                 currentUiSettings.setMapToolbarEnabled(false);
                 currentUiSettings.setCompassEnabled(false);
-                currentUiSettings.setMyLocationButtonEnabled(false);
+                currentUiSettings.setMyLocationButtonEnabled(true);
                 currentUiSettings.setZoomControlsEnabled(false);
-
                 mMap.setMinZoomPreference(11);
-
                 LatLng centralPoint = new LatLng(53.90308663, 27.56050229);
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(centralPoint,11));
-
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(centralPoint, 11));
                 LatLngBounds ADELAIDE = new LatLngBounds(new LatLng(53.83206766, 27.36127853), new LatLng(53.98153138, 27.69086838));
                 mMap.setLatLngBoundsForCameraTarget(ADELAIDE);
-
+                if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                    requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.INTERNET}
+                            ,10);
+                }else{
+                    mMap.setMyLocationEnabled(true);
+                }
 
                 mMap.setOnCameraIdleListener(new GoogleMap.OnCameraIdleListener() {
                     float previousZoomLevel;
@@ -92,8 +86,7 @@ public class mapViewer extends Fragment {
                     public void onCameraIdle() {
 
                         float zoomLevel = mMap.getCameraPosition().zoom;
-                        if (previousZoomLevel!=zoomLevel)
-                        {
+                        if (previousZoomLevel != zoomLevel) {
                             mMap.clear();
                         }
                         previousZoomLevel = zoomLevel;
@@ -101,14 +94,10 @@ public class mapViewer extends Fragment {
                         dataBaseConnection = new busStopsDatabase(getContext());
                         dataBaseConnection.create_db();
                         database = dataBaseConnection.open();
-
-                        number = "36";
-
+                        number = "104";
                         userCursor = database.rawQuery("SELECT * FROM "+ tableNameRoutes +" WHERE transport = "+number+";",null);
                         userCursor.moveToFirst();
                         String shapeID = userCursor.getString(userCursor.getColumnIndex(busStopsDatabase.RouteID));
-
-                        //String shapeID = "170632";
 
                         userCursor = database.rawQuery("SELECT * FROM "+ tableNameShapes +" WHERE "+ ShapeID +" = "+shapeID+";",null);
 
@@ -122,7 +111,6 @@ public class mapViewer extends Fragment {
                         }
                         ruta.color(Color.RED).width(7);
                         Polyline polygon=mMap.addPolyline(ruta);
-
                         if (zoomLevel>=16)
                         {
                             LatLngBounds currentRectangle = mMap.getProjection().getVisibleRegion().latLngBounds;
@@ -142,7 +130,6 @@ public class mapViewer extends Fragment {
                 });
             }
         });
-
         return rootView;
     }
 
@@ -171,12 +158,10 @@ public class mapViewer extends Fragment {
     }
 
     private ArrayList<LatLng> decodePoly(String encoded) {
-
         Log.i("Location", "String received: "+encoded);
         ArrayList<LatLng> poly = new ArrayList<LatLng>();
         int index = 0, len = encoded.length();
         int lat = 0, lng = 0;
-
         while (index < len) {
             int b, shift = 0, result = 0;
             do {
@@ -198,10 +183,6 @@ public class mapViewer extends Fragment {
             lng += dlng;
             LatLng p = new LatLng((((double) lat / 1E5)),(((double) lng / 1E5)));
             poly.add(p);
-        }
-
-        for(int i=0;i<poly.size();i++){
-            Log.i("Location", "Point sent: Latitude: "+poly.get(i).latitude+" Longitude: "+poly.get(i).longitude);
         }
         return poly;
     }

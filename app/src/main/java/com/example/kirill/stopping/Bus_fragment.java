@@ -1,11 +1,14 @@
 package com.example.kirill.stopping;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -55,6 +58,10 @@ public class Bus_fragment extends Fragment {
         dbHelper = new DatabaseHelper(getContext());
         dbHelper.create_db();
         database = dbHelper.open();
+        if (ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getContext(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION,Manifest.permission.INTERNET}
+                    ,10);
+        }
         userCursor = database.rawQuery("select * from Transport where type ='A'" ,null);
         BusListAdapter adapter = new BusListAdapter(this.getContext(), userCursor);
         gridView.setAdapter(adapter);
