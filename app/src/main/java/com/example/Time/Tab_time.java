@@ -48,11 +48,13 @@ public class Tab_time extends AppCompatActivity{
         getSupportActionBar().setIcon(R.drawable.busstop);
         String a = getIntent().getExtras().getString("time");
         String type = getIntent().getExtras().getString("type");
-        Cursor stoping = database.rawQuery("select * from Halt where  _id = " + a ,null);
-        stoping.moveToFirst();
-        String name =stoping.getString(stoping.getColumnIndex(DatabaseHelper.COLUMN_NAME));
-        getSupportActionBar().setTitle("    "+name);
-        stoping.close();
+//        Cursor stoping = database.rawQuery("select * from Halt where  _id = " + a ,null);
+//        stoping.moveToFirst();
+//        String name =stoping.getString(stoping.getColumnIndex(DatabaseHelper.COLUMN_NAME));
+//        getSupportActionBar().setTitle("    "+name);
+//        stoping.close();
+        String station = getIntent().getExtras().getString("station");
+        getSupportActionBar().setTitle(station);
 
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mViewPager = (ViewPager) findViewById(R.id.container);

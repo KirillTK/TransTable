@@ -56,7 +56,6 @@ public class Main_activity extends AppCompatActivity {
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
-
         bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
         refresh();
         bottomNavigationBar.setTabSelectedListener(mOnNavigationItemSelectedListener);
