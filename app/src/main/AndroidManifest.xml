@@ -39,7 +39,10 @@
             android:name="com.example.Halt.Halt"
             android:label="@string/title_activity_halt"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".NearTransport"></activity>
+        <activity android:name=".NearTransport" />
+        <activity
+            android:name="com.example.Map.MapsActivity"
+            android:label="@string/title_activity_maps"></activity>
     </application>
 
 </manifest>

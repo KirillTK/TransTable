@@ -43,7 +43,7 @@ public class Main_activity extends AppCompatActivity {
                 .addItem(new BottomNavigationItem(R.drawable.busrapid,null).setActiveColorResource(R.color.bus))
                 .addItem(new BottomNavigationItem(R.drawable.troll,null).setActiveColorResource(R.color.troll))
                 .addItem(new BottomNavigationItem(R.drawable.ic_star_border_black_24dp,null).setActiveColorResource(R.color.favorite))
-                .addItem(new BottomNavigationItem(R.drawable.ic_map_black_24dp,null).setActiveColorResource(R.color.colorPrimaryDark))
+               // .addItem(new BottomNavigationItem(R.drawable.ic_map_black_24dp,null).setActiveColorResource(R.color.colorPrimaryDark))
                 .addItem(new BottomNavigationItem(R.drawable.ic_place_black_24dp,null).setActiveColorResource(R.color.near))
                 .initialise();
     }

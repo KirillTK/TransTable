@@ -1,5 +1,6 @@
 package com.example.Halt;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.design.widget.AppBarLayout;
@@ -17,6 +18,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+
+import com.example.Map.MapsActivity;
 import com.example.kirill.stopping.DatabaseHelper;
 import com.example.kirill.stopping.R;
 
@@ -111,9 +114,13 @@ public class Halt extends AppCompatActivity {
 
         int id = item.getItemId();
 
-
-        if (id == android.R.id.home) {
-            finish();
+        switch (id){
+            case android.R.id.home: finish(); break;
+            case R.id.maps:
+                Intent intent = new Intent(getApplicationContext(),MapsActivity.class);
+                intent.putExtra("number",number);
+                startActivityForResult(intent,1);
+                break;
         }
 
         return super.onOptionsItemSelected(item);

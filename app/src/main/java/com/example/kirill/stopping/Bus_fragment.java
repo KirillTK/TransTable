@@ -52,7 +52,6 @@ public class Bus_fragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        number = "36";
         View view =  inflater.inflate(R.layout.fragment_bus_fragment, container, false);
         gridView = (GridView)view.findViewById(R.id.Table);
         dbHelper = new DatabaseHelper(getContext());
