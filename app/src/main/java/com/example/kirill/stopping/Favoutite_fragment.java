@@ -96,6 +96,7 @@ public class Favoutite_fragment extends Fragment {
                 intent.putExtra("time", cursor.getString(cursor.getPosition()));
                 cursor.close();
                 intent.putExtra("type","F");
+                intent.putExtra("station",stations.get(i));
                 startActivityForResult(intent, 1);
             }
         });

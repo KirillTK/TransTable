@@ -41,8 +41,9 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".NearTransport" />
         <activity
-            android:name="com.example.Map.MapsActivity"
-            android:label="@string/title_activity_maps"></activity>
+            android:name="com.example.Map.MapActivity"
+            android:label="MapActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

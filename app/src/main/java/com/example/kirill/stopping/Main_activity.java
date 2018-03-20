@@ -18,10 +18,9 @@ public class Main_activity extends AppCompatActivity {
                 case 0: getSupportFragmentManager().beginTransaction().replace(R.id.content, new Bus_fragment()).commit(); toolbar.setBackgroundColor(getResources().getColor(R.color.bus)); break;
                 case 1: getSupportFragmentManager().beginTransaction().replace(R.id.content,new Troll_fragment()).commit();toolbar.setBackgroundColor(getResources().getColor(R.color.troll)); break;
                 case 2: getSupportFragmentManager().beginTransaction().replace(R.id.content,new Favoutite_fragment()).commit(); toolbar.setBackgroundColor(getResources().getColor(R.color.favorite));break;
-                case 3: getSupportFragmentManager().beginTransaction().replace(R.id.content,new mapViewer()).commit();toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark)); break;
-                case 4: getSupportFragmentManager().beginTransaction().replace(R.id.content,new NearHalt()).commit();toolbar.setBackgroundColor(getResources().getColor(R.color.near)); break;
+//                case 3: getSupportFragmentManager().beginTransaction().replace(R.id.content,new mapViewer()).commit();toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark)); break;
+                case 3: getSupportFragmentManager().beginTransaction().replace(R.id.content,new NearHalt()).commit();toolbar.setBackgroundColor(getResources().getColor(R.color.near)); break;
             }
-
         }
 
         @Override
@@ -47,7 +46,6 @@ public class Main_activity extends AppCompatActivity {
                 .addItem(new BottomNavigationItem(R.drawable.ic_place_black_24dp,null).setActiveColorResource(R.color.near))
                 .initialise();
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

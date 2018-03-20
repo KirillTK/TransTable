@@ -59,6 +59,7 @@ public class NearTransport extends AppCompatActivity {
                 Intent intent = new Intent(getApplicationContext(), Tab_time.class);
                 intent.putExtra("time", Integer.toString(getId(i,halt)));
                 intent.putExtra("type", "N");
+                intent.putExtra("station",halt);
                 startActivityForResult(intent, 1);
             }
         });
@@ -78,7 +79,7 @@ public class NearTransport extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.menu_halt, menu);
+        getMenuInflater().inflate(R.menu.menu_tab_time, menu);
         return true;
     }
 

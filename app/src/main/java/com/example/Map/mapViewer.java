@@ -49,15 +49,12 @@ public class mapViewer extends Fragment {
         View rootView = inflater.inflate(R.layout.map, container, false);
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
-
         mMapView.onResume();
-
         try {
             MapsInitializer.initialize(getActivity().getApplicationContext());
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
         mMapView.getMapAsync(new OnMapReadyCallback() {
             @Override
@@ -90,21 +87,18 @@ public class mapViewer extends Fragment {
                             mMap.clear();
                         }
                         previousZoomLevel = zoomLevel;
-
                         dataBaseConnection = new busStopsDatabase(getContext());
                         dataBaseConnection.create_db();
                         database = dataBaseConnection.open();
-                        number = "104";
-                        userCursor = database.rawQuery("SELECT * FROM "+ tableNameRoutes +" WHERE transport = "+number+";",null);
+                        String number = getActivity().getIntent().getStringExtra("number");
+                        String type = getActivity().getIntent().getStringExtra("type");
+                        userCursor = database.rawQuery("SELECT * FROM "+ tableNameRoutes +" WHERE transport = '"+number+"' and type = '"+type+"'",null);
                         userCursor.moveToFirst();
                         String shapeID = userCursor.getString(userCursor.getColumnIndex(busStopsDatabase.RouteID));
-
                         userCursor = database.rawQuery("SELECT * FROM "+ tableNameShapes +" WHERE "+ ShapeID +" = "+shapeID+";",null);
-
                         ArrayList<LatLng> PolyLine = new ArrayList<LatLng>();
                         userCursor.moveToFirst();
                         PolyLine = decodePoly(userCursor.getString(userCursor.getColumnIndex(busStopsDatabase.ShapeString)));
-
                         PolylineOptions ruta=new PolylineOptions();
                         for(int i=0;i<PolyLine.size();i++){
                             ruta.add(new LatLng(PolyLine.get(i).latitude, PolyLine.get(i).longitude));
@@ -186,5 +180,4 @@ public class mapViewer extends Fragment {
         }
         return poly;
     }
-
 }

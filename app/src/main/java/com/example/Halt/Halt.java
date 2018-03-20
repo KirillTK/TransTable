@@ -18,8 +18,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-
-import com.example.Map.MapsActivity;
+import com.example.Map.MapActivity;
 import com.example.kirill.stopping.DatabaseHelper;
 import com.example.kirill.stopping.R;
 
@@ -40,7 +39,6 @@ public class Halt extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_halt);
         setToolbar();
-
     }
 
     private  void setToolbar(){
@@ -117,8 +115,9 @@ public class Halt extends AppCompatActivity {
         switch (id){
             case android.R.id.home: finish(); break;
             case R.id.maps:
-                Intent intent = new Intent(getApplicationContext(),MapsActivity.class);
+                Intent intent = new Intent(getApplicationContext(),MapActivity.class);
                 intent.putExtra("number",number);
+                intent.putExtra("type",type);
                 startActivityForResult(intent,1);
                 break;
         }
