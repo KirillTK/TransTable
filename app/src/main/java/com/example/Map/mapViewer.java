@@ -24,6 +24,7 @@ import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -117,21 +118,21 @@ public class mapViewer extends Fragment {
                         }
                         ruta.color(Color.RED).width(7);
                         Polyline polygon = mMap.addPolyline(ruta);
-                        //if (zoomLevel>=16)
-                        //{
-                        //    LatLngBounds currentRectangle = mMap.getProjection().getVisibleRegion().latLngBounds;
-                        //    userCursor = database.rawQuery("SELECT * FROM "+tableName+" WHERE "+ busStopsDatabase.stopLat + " > " +
-                        //            currentRectangle.southwest.latitude + " AND " + busStopsDatabase.stopLat + " < " +
-                        //            currentRectangle.northeast.latitude + " AND " + busStopsDatabase.stopLong + " > " +
-                        //            currentRectangle.southwest.longitude + " AND " + busStopsDatabase.stopLong + " < " +
-                        //            currentRectangle.northeast.longitude,null);
-                        //
-                        //    for (userCursor.moveToFirst(); !userCursor.isAfterLast(); userCursor.moveToNext())
-                        //    {
-                        //        LatLng busStopToDraw = new LatLng(userCursor.getDouble(userCursor.getColumnIndex(busStopsDatabase.stopLat)),userCursor.getDouble(userCursor.getColumnIndex(busStopsDatabase.stopLong)));
-                        //        mMap.addMarker(new MarkerOptions().position(busStopToDraw).title(userCursor.getString(userCursor.getColumnIndex(busStopsDatabase.stopName))));
-                        //    }
-                        //}
+
+                        if (zoomLevel>=20)
+                        {
+                            LatLngBounds currentRectangle = mMap.getProjection().getVisibleRegion().latLngBounds;
+                            userCursor = database.rawQuery("SELECT * FROM Coordinates WHERE LONG > " +
+                                    currentRectangle.southwest.latitude + " AND LONG < " +
+                                    currentRectangle.northeast.latitude + " AND LAT > " +
+                                    currentRectangle.southwest.longitude + " AND LAT < " +
+                                    currentRectangle.northeast.longitude,null);
+                            for (userCursor.moveToFirst(); !userCursor.isAfterLast(); userCursor.moveToNext())
+                            {
+                                LatLng busStopToDraw = new LatLng(userCursor.getDouble(userCursor.getColumnIndex(busStopsDatabase.stopLat)),userCursor.getDouble(userCursor.getColumnIndex(busStopsDatabase.stopLong)));
+                                mMap.addMarker(new MarkerOptions().position(busStopToDraw).title(userCursor.getString(userCursor.getColumnIndex(busStopsDatabase.stopName))));
+                            }
+                        }
                     }
                 });
             }
