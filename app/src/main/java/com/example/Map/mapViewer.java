@@ -21,6 +21,7 @@ import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.UiSettings;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.MarkerOptions;
@@ -93,34 +94,44 @@ public class mapViewer extends Fragment {
                         database = dataBaseConnection.open();
                         String number = getActivity().getIntent().getStringExtra("number");
                         String type = getActivity().getIntent().getStringExtra("type");
-                        userCursor = database.rawQuery("SELECT * FROM "+ tableNameRoutes +" WHERE transport = '"+number+"' and type = '"+type+"'",null);
+                        userCursor = database.rawQuery("SELECT * FROM Routes WHERE transport = '"+number+"' and type = '"+type+"'",null);
                         userCursor.moveToFirst();
-                        String shapeID = userCursor.getString(userCursor.getColumnIndex(busStopsDatabase.RouteID));
-                        userCursor = database.rawQuery("SELECT * FROM "+ tableNameShapes +" WHERE "+ ShapeID +" = "+shapeID+";",null);
+                        String shapeID = userCursor.getString(userCursor.getColumnIndex("ROUTEID"));
+                        userCursor = database.rawQuery("SELECT * FROM Shapes WHERE ID = "+shapeID+";",null); ///Находит шифр
                         ArrayList<LatLng> PolyLine = new ArrayList<LatLng>();
                         userCursor.moveToFirst();
-                        PolyLine = decodePoly(userCursor.getString(userCursor.getColumnIndex(busStopsDatabase.ShapeString)));
-                        PolylineOptions ruta=new PolylineOptions();
+                        PolyLine = decodePoly(userCursor.getString(userCursor.getColumnIndex("Shape"))); // Хранит декодированный рисунок
+                        PolylineOptions ruta = new PolylineOptions();
                         for(int i=0;i<PolyLine.size();i++){
+                            if(i == 0 ){
+                                mMap.addMarker(new MarkerOptions().position(new LatLng(PolyLine.get(i).latitude, PolyLine.get(i).longitude)).icon(
+                                        BitmapDescriptorFactory
+                                                .defaultMarker(BitmapDescriptorFactory.HUE_RED)).title("A"));
+                            }
+                            if (i == PolyLine.size() - 1 ){
+                                mMap.addMarker(new MarkerOptions().position(new LatLng(PolyLine.get(i).latitude, PolyLine.get(i).longitude)).icon(
+                                        BitmapDescriptorFactory
+                                                .defaultMarker(BitmapDescriptorFactory.HUE_GREEN)).title("B"));
+                            }
                             ruta.add(new LatLng(PolyLine.get(i).latitude, PolyLine.get(i).longitude));
                         }
                         ruta.color(Color.RED).width(7);
-                        Polyline polygon=mMap.addPolyline(ruta);
-                        if (zoomLevel>=16)
-                        {
-                            LatLngBounds currentRectangle = mMap.getProjection().getVisibleRegion().latLngBounds;
-                            userCursor = database.rawQuery("SELECT * FROM "+tableName+" WHERE "+ busStopsDatabase.stopLat + " > " +
-                                    currentRectangle.southwest.latitude + " AND " + busStopsDatabase.stopLat + " < " +
-                                    currentRectangle.northeast.latitude + " AND " + busStopsDatabase.stopLong + " > " +
-                                    currentRectangle.southwest.longitude + " AND " + busStopsDatabase.stopLong + " < " +
-                                    currentRectangle.northeast.longitude,null);
-
-                            for (userCursor.moveToFirst(); !userCursor.isAfterLast(); userCursor.moveToNext())
-                            {
-                                LatLng busStopToDraw = new LatLng(userCursor.getDouble(userCursor.getColumnIndex(busStopsDatabase.stopLat)),userCursor.getDouble(userCursor.getColumnIndex(busStopsDatabase.stopLong)));
-                                mMap.addMarker(new MarkerOptions().position(busStopToDraw).title(userCursor.getString(userCursor.getColumnIndex(busStopsDatabase.stopName))));
-                            }
-                        }
+                        Polyline polygon = mMap.addPolyline(ruta);
+                        //if (zoomLevel>=16)
+                        //{
+                        //    LatLngBounds currentRectangle = mMap.getProjection().getVisibleRegion().latLngBounds;
+                        //    userCursor = database.rawQuery("SELECT * FROM "+tableName+" WHERE "+ busStopsDatabase.stopLat + " > " +
+                        //            currentRectangle.southwest.latitude + " AND " + busStopsDatabase.stopLat + " < " +
+                        //            currentRectangle.northeast.latitude + " AND " + busStopsDatabase.stopLong + " > " +
+                        //            currentRectangle.southwest.longitude + " AND " + busStopsDatabase.stopLong + " < " +
+                        //            currentRectangle.northeast.longitude,null);
+                        //
+                        //    for (userCursor.moveToFirst(); !userCursor.isAfterLast(); userCursor.moveToNext())
+                        //    {
+                        //        LatLng busStopToDraw = new LatLng(userCursor.getDouble(userCursor.getColumnIndex(busStopsDatabase.stopLat)),userCursor.getDouble(userCursor.getColumnIndex(busStopsDatabase.stopLong)));
+                        //        mMap.addMarker(new MarkerOptions().position(busStopToDraw).title(userCursor.getString(userCursor.getColumnIndex(busStopsDatabase.stopName))));
+                        //    }
+                        //}
                     }
                 });
             }

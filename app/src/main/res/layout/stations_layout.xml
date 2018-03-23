@@ -26,8 +26,8 @@
         android:gravity="center_vertical"
         android:text="ExampleStation"
         android:textColor="@color/Elements"
-        android:textSize="15sp"
-        android:textStyle="bold"></TextView>
+        android:textSize="15sp">
+    </TextView>
 
 
     <com.like.LikeButton
