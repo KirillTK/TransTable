@@ -8,14 +8,14 @@
 
     <TextView
         android:id="@+id/trasnportnumber"
-        android:layout_width="80dp"
+        android:layout_width="65dp"
         android:layout_height="40dp"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/imageTransport"
         android:layout_toRightOf="@+id/imageTransport"
         android:gravity="center"
         android:text="1"
-        android:textSize="25dp"
+        android:textSize="20dp"
         android:textStyle="bold"></TextView>
 
 
@@ -33,7 +33,6 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:textStyle="bold"
         android:textColor="@color/Elements"
         android:layout_toEndOf="@+id/trasnportnumber"
         android:layout_toRightOf="@+id/trasnportnumber"

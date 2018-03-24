@@ -30,4 +30,9 @@
 
     <style name="TextAppearance"></style>
 
+    <style name="CircularProgress" parent="Theme.AppCompat.Light">
+        <item name="colorAccent">@color/near</item>
+    </style>
+
+
 </resources>

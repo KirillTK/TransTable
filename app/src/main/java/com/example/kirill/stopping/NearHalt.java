@@ -9,7 +9,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
@@ -18,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import com.example.Adapters.NearHaltAdapter;
 import com.example.Map.busStopsDatabase;
@@ -27,8 +27,6 @@ import java.util.List;
 
 public class NearHalt extends Fragment {
 
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
     busStopsDatabase dataBaseConnection;
     private Cursor NearCursorStopiing;
     private Cursor Buses;
@@ -39,19 +37,7 @@ public class NearHalt extends Fragment {
     private ArrayList<String> nearHaltList;
     private ArrayList<String> IdList;
     private List<Integer> distance;
-    private String mParam1;
-    private String mParam2;
-
-    private OnFragmentInteractionListener mListener;
-
-    public static NearHalt newInstance(String param1, String param2) {
-        NearHalt fragment = new NearHalt();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    LinearLayout layout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -64,9 +50,10 @@ public class NearHalt extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.near_halt, container, false);
-        NearHalts = (ListView) rootView.findViewById(R.id.nearhaltlist);
         locationMangaer = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        layout = (LinearLayout) rootView.findViewById(R.id.progressbar_view);
         NearCursorStopiing = database.rawQuery("select * from Coordinates",null);
+        NearHalts = (ListView) rootView.findViewById(R.id.nearhaltlist);
         locationListener = new LocationListener() {
             @Override
             public void onLocationChanged(Location location) {
@@ -88,6 +75,7 @@ public class NearHalt extends Fragment {
                 }
                 NearCursorStopiing.close();
                 if(getActivity()!=null){
+                    layout.setVisibility(View.GONE);
                     NearHaltAdapter adapter = new NearHaltAdapter(getContext(),nearHaltList,distance,IdList);
                     NearHalts.setAdapter(adapter);
                 }
@@ -140,31 +128,5 @@ public class NearHalt extends Fragment {
 
     private void getUPD() {
         locationMangaer.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 20, locationListener); ///сделать больше задержку для обновления координат
-    }
-
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
-
-    public interface OnFragmentInteractionListener {
-        void onFragmentInteraction(Uri uri);
     }
 }
