@@ -16,6 +16,7 @@
         <activity
             android:name=".Main_activity"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,6 +27,7 @@
         <activity
             android:name="com.example.Time.Tab_time"
             android:label="@string/title_activity_tab_time"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
 
         <meta-data
@@ -38,11 +40,15 @@
         <activity
             android:name="com.example.Halt.Halt"
             android:label="@string/title_activity_halt"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-        <activity android:name=".NearTransport" />
+        <activity
+            android:name=".NearTransport"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.example.Map.MapActivity"
             android:label="MapActivity"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
