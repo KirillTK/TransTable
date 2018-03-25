@@ -27,18 +27,26 @@
 
     <TextView
         android:id="@+id/route"
-        android:layout_width="300dp"
+        android:layout_width="215dp"
         android:layout_height="40dp"
         android:layout_alignBottom="@+id/trasnportnumber"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:textColor="@color/Elements"
         android:layout_toEndOf="@+id/trasnportnumber"
         android:layout_toRightOf="@+id/trasnportnumber"
         android:gravity="center_vertical"
         android:paddingStart="25dp"
-        android:text="TextView" />
+        android:text="TextView"
+        android:textColor="@color/Elements" />
 
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/route"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/route"
+        android:gravity="center_vertical"
+        android:layout_toRightOf="@+id/route"
+        android:text="13:40" />
 
 </RelativeLayout>

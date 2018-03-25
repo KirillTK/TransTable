@@ -12,6 +12,9 @@ import android.widget.TextView;
 import com.example.kirill.stopping.DatabaseHelper;
 import com.example.kirill.stopping.R;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class NearTransportAdapter extends CursorAdapter{
     private Cursor transport;
     private DatabaseHelper dbHelper;
@@ -32,13 +35,16 @@ public class NearTransportAdapter extends CursorAdapter{
     public void bindView(View view, Context context, Cursor cursor) {
         dbHelper = new DatabaseHelper(context);
         database = dbHelper.open();
+        int id = 1;
         String text = null;
+        TextView time = (TextView) view.findViewById(R.id.time);
         TextView textView = (TextView) view.findViewById(R.id.trasnportnumber);
         TextView route = (TextView) view.findViewById(R.id.route);
         ImageView imageView = (ImageView) view.findViewById(R.id.imageTransport);
-        transport = database.rawQuery("select * from Halt,Transport where Halt.route = '"+cursor.getString(cursor.getColumnIndex("NAME"))+"' and Halt.halt_transport = Transport._id and Halt.name = '"+halt+"' and Transport.number = '"+cursor.getString(cursor.getColumnIndex("transport"))+"' and Transport.type = '"+cursor.getString(cursor.getColumnIndex("TYPE"))+"'",null);
+        transport = database.rawQuery("select  Halt.*,Transport.number,Transport.type from Halt,Transport where Halt.route = '"+cursor.getString(cursor.getColumnIndex("NAME"))+"' and Halt.halt_transport = Transport._id and Halt.name = '"+halt+"' and Transport.number = '"+cursor.getString(cursor.getColumnIndex("transport"))+"' and Transport.type = '"+cursor.getString(cursor.getColumnIndex("TYPE"))+"'",null);
         if (transport!=null && transport.getCount()>0){
             transport.moveToFirst();
+            id = transport.getInt(transport.getColumnIndex("_id"));
             text = transport.getString(transport.getColumnIndex("number"));
             transport.close();
             switch (cursor.getString(cursor.getColumnIndex("TYPE"))) {
@@ -50,5 +56,12 @@ public class NearTransportAdapter extends CursorAdapter{
         }
         textView.setText(text);
         route.setText(cursor.getString(cursor.getColumnIndex("NAME")));
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+        String currenttime = simpleDateFormat.format(new Date());
+        String  sql  ="select time from Time where time_halt = "+id+" and time >= '"+currenttime+"'";
+        transport = database.rawQuery(sql,null);
+        transport.moveToFirst();
+        time.setText(transport.getString(transport.getPosition()));
+        transport.close();
     }
 }
