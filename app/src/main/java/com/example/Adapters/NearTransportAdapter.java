@@ -3,15 +3,19 @@ package com.example.Adapters;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import com.example.kirill.stopping.DatabaseHelper;
 import com.example.kirill.stopping.R;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -52,16 +56,44 @@ public class NearTransportAdapter extends CursorAdapter{
                 case "Т": imageView.setImageResource(R.drawable.busexpress); break;
                 default: imageView.setImageResource(R.drawable.busnormal); break;
             }
-
         }
         textView.setText(text);
         route.setText(cursor.getString(cursor.getColumnIndex("NAME")));
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
         String currenttime = simpleDateFormat.format(new Date());
-        String  sql  ="select time from Time where time_halt = "+id+" and time >= '"+currenttime+"'";
+        String  sql  ="select time from Time where time_halt = "+id+" and TIME(time) >= TIME('"+currenttime+"')";
         transport = database.rawQuery(sql,null);
-        transport.moveToFirst();
-        time.setText(transport.getString(transport.getPosition()));
-        transport.close();
+        if(transport.moveToFirst()){
+            String neartime = transport.getString(transport.getPosition());
+            try {
+                Log.d("time","currenttime  "+currenttime);
+                Log.d("time","neartime  "+ neartime);
+                time.setText(getNearTime(currenttime,neartime)+" мин");
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            transport.close();
+        }else {
+            time.setText("завтра");
+        }
+    }
+
+    public String getNearTime(String currenttime,String neartime) throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
+        Date currentdate = simpleDateFormat.parse(currenttime);
+        Date neardate = simpleDateFormat.parse(neartime);
+        int currentvalue = getTime(currentdate.getHours(),currentdate.getMinutes());
+        Log.d("time","currentvalue  "+currentvalue);
+        int nearvalue = getTime(neardate.getHours(),neardate.getMinutes());
+        Log.d("time","nearvalue "+nearvalue);
+        int result = nearvalue - currentvalue;
+        Log.d("time","result    "+result);
+        return String.valueOf(result);
+    }
+
+    public int getTime(int h, int m){
+        int sum = 0;
+        sum = h*60+m;
+        return sum;
     }
 }
