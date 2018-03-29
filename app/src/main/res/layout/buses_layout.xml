@@ -6,14 +6,14 @@
 
     <ImageView
         android:id="@+id/busTypeIcon"
-        android:layout_width="100px"
-        android:layout_height="100px"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_marginTop="10px" />
 
     <TextView
         android:id="@+id/busID"
         android:layout_width="match_parent"
-        android:layout_height="100px"
+        android:layout_height="50dp"
         android:layout_marginTop="10px"
         android:gravity="center_vertical"
         android:padding="3dp"
