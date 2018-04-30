@@ -119,7 +119,7 @@ public class mapViewer extends Fragment {
                         ruta.color(Color.RED).width(7);
                         Polyline polygon = mMap.addPolyline(ruta);
 
-                        if (zoomLevel>=20)
+                        if (zoomLevel>=16)
                         {
                             LatLngBounds currentRectangle = mMap.getProjection().getVisibleRegion().latLngBounds;
                             userCursor = database.rawQuery("SELECT * FROM Coordinates WHERE LONG > " +

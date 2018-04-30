@@ -10,11 +10,12 @@
         android:id="@+id/trasnportnumber"
         android:layout_width="65dp"
         android:layout_height="40dp"
+        android:layout_alignBottom="@+id/imageTransport"
         android:layout_alignParentTop="true"
         android:layout_toEndOf="@+id/imageTransport"
         android:layout_toRightOf="@+id/imageTransport"
         android:gravity="center"
-        android:text="1"
+        android:text="144-э"
         android:textSize="20dp"
         android:textStyle="bold"></TextView>
 
@@ -27,18 +28,31 @@
 
     <TextView
         android:id="@+id/route"
-        android:layout_width="300dp"
+        android:layout_width="215dp"
         android:layout_height="40dp"
         android:layout_alignBottom="@+id/trasnportnumber"
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/trasnportnumber"
+        android:layout_toLeftOf="@+id/time"
+        android:layout_toRightOf="@+id/trasnportnumber"
+        android:layout_toStartOf="@+id/time"
+        android:gravity="center_vertical"
+        android:paddingStart="10dp"
+        android:paddingEnd="5dp"
+        android:text="TextView"
+        android:textColor="@color/Elements" />
+
+    <TextView
+        android:id="@+id/time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/route"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:textColor="@color/Elements"
-        android:layout_toEndOf="@+id/trasnportnumber"
-        android:layout_toRightOf="@+id/trasnportnumber"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
         android:gravity="center_vertical"
-        android:paddingStart="25dp"
-        android:text="TextView" />
-
+        android:text="Завтра"
+        android:textSize="12dp" />
 
 </RelativeLayout>
