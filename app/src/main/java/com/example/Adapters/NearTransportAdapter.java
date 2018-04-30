@@ -3,65 +3,64 @@ package com.example.Adapters;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CursorAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.example.kirill.stopping.DatabaseHelper;
 import com.example.kirill.stopping.R;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-public class NearTransportAdapter extends CursorAdapter{
-    private Cursor transport;
+public class NearTransportAdapter extends ArrayAdapter<String> {
     private DatabaseHelper dbHelper;
     private SQLiteDatabase database;
-    private String halt;
+    private Cursor transport;
+    private Context context;
+    private List<String> transport_number = new ArrayList<>();
+    private List<String> type = new ArrayList<>();
+    private List<String> route2 = new ArrayList<>();
+    private List<Integer> id = new ArrayList<>();
+    public int id2;
 
-    public NearTransportAdapter(Context context, Cursor c,String halt) {
-        super(context, c, 0);
-        this.halt = halt;
+    public NearTransportAdapter(@NonNull Context context,List<String> transport_number,List<String> type,List<String> route,List<Integer> id) {
+        super(context, R.layout.near_transport, transport_number);
+        this.context = context;
+        this.transport_number = transport_number;
+        this.type = type;
+        this.route2 = route;
+        this.id = id;
     }
 
     @Override
-    public View newView(Context context, Cursor cursor, ViewGroup viewGroup) {
-        return LayoutInflater.from(context).inflate(R.layout.near_transport, viewGroup, false);
-    }
-
-    @Override
-    public void bindView(View view, Context context, Cursor cursor) {
+    public View getView(int position, View convertView, ViewGroup parent) {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.near_transport, parent, false);
         dbHelper = new DatabaseHelper(context);
         database = dbHelper.open();
-        int id = 1;
-        String text = null;
         TextView time = (TextView) view.findViewById(R.id.time);
         TextView textView = (TextView) view.findViewById(R.id.trasnportnumber);
         TextView route = (TextView) view.findViewById(R.id.route);
         ImageView imageView = (ImageView) view.findViewById(R.id.imageTransport);
-        transport = database.rawQuery("select  Halt.*,Transport.number,Transport.type from Halt,Transport where Halt.route = '"+cursor.getString(cursor.getColumnIndex("NAME"))+"' and Halt.halt_transport = Transport._id and Halt.name = '"+halt+"' and Transport.number = '"+cursor.getString(cursor.getColumnIndex("transport"))+"' and Transport.type = '"+cursor.getString(cursor.getColumnIndex("TYPE"))+"'",null);
-        if (transport!=null && transport.getCount()>0){
-            transport.moveToFirst();
-            id = transport.getInt(transport.getColumnIndex("_id"));
-            text = transport.getString(transport.getColumnIndex("number"));
-            transport.close();
-            switch (cursor.getString(cursor.getColumnIndex("TYPE"))) {
-                case "A": imageView.setImageResource(R.drawable.busnormal); break;
-                case "Т": imageView.setImageResource(R.drawable.busexpress); break;
-                default: imageView.setImageResource(R.drawable.busnormal); break;
-            }
+        id2 = id.get(position);
+        switch (type.get(position)) {
+            case "A": imageView.setImageResource(R.drawable.busnormal); break;
+            case "Т": imageView.setImageResource(R.drawable.busexpress); break;
+            default: imageView.setImageResource(R.drawable.busnormal); break;
         }
-        textView.setText(text);
-        route.setText(cursor.getString(cursor.getColumnIndex("NAME")));
+        textView.setText(transport_number.get(position));
+        Log.d("Ner","number = "+transport_number.get(position));
+        route.setText(route2.get(position));
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
         String currenttime = simpleDateFormat.format(new Date());
-        String  sql  ="select time from Time where time_halt = "+id+" and TIME(time) >= TIME('"+currenttime+"')";
+        String  sql  ="select time from Time where time_halt = "+id2+" and TIME(time) >= TIME('"+currenttime+"')";
         transport = database.rawQuery(sql,null);
         if(transport.moveToFirst()){
             String neartime = transport.getString(transport.getPosition());
@@ -76,7 +75,9 @@ public class NearTransportAdapter extends CursorAdapter{
         }else {
             time.setText("завтра");
         }
+        return view;
     }
+
 
     public String getNearTime(String currenttime,String neartime) throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");

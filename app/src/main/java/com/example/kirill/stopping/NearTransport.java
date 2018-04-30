@@ -19,17 +19,26 @@ import com.example.Adapters.NearTransportAdapter;
 import com.example.Map.busStopsDatabase;
 import com.example.Time.Tab_time;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class NearTransport extends AppCompatActivity {
     private Toolbar toolbar;
     private Cursor busCursor;
+    private Cursor forAdapter;
     private List<String> halt_transport_bus;
     SQLiteDatabase database;
     busStopsDatabase dataBaseConnection;
     private ListView busGrid;
     private DatabaseHelper dbHelper;
-    private SQLiteDatabase database2;
+    private List<String> transport_number;
+    private List<String> type;
+    private List<String> route;
+    private List<Integer> id2;
+    private String halt;
+    DatabaseHelper dbHelper2;
+    SQLiteDatabase database2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,8 +49,12 @@ public class NearTransport extends AppCompatActivity {
         dbHelper = new DatabaseHelper(getApplicationContext());
         database2 = dbHelper.open();
         halt_transport_bus = new ArrayList<>();
+        transport_number = new ArrayList<>();
+        type = new ArrayList<>();
+        route = new ArrayList<>();
+        id2 = new ArrayList<>();
         busGrid = (ListView)findViewById(R.id.listTransport);
-        final String halt = getIntent().getExtras().getString("halt");
+        halt = getIntent().getExtras().getString("halt");
         String id = getIntent().getExtras().getString("id");
         toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -51,7 +64,8 @@ public class NearTransport extends AppCompatActivity {
         toolbar.setBackgroundColor(getResources().getColor(R.color.near));
         String sql = "select distinct Routes._id,Routes.transport,Routes.TYPE,Routes.NAME from Coordinates,Routes where Coordinates.NAME = '"+halt+"' and Routes.STOPS like '%"+id+"%' and Routes.NAME not like '%АП%' and Routes.NAME not like '%ТП%'";
         busCursor = database.rawQuery(sql,null);
-        NearTransportAdapter adapter = new NearTransportAdapter(getApplicationContext(),busCursor,halt);
+        getValue(busCursor);
+        NearTransportAdapter adapter = new NearTransportAdapter(getApplicationContext(),transport_number,type,route,id2);
         busGrid.setAdapter(adapter);
         busGrid.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -90,5 +104,21 @@ public class NearTransport extends AppCompatActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void getValue(Cursor cursor){
+        dbHelper2 = new DatabaseHelper(getApplicationContext());
+        database2 = dbHelper2.open();
+        while (busCursor.moveToNext()){
+            forAdapter = database2.rawQuery("select  Halt.*,Transport.number,Transport.type from Halt,Transport where Halt.route = '"+cursor.getString(cursor.getColumnIndex("NAME"))+"' and Halt.halt_transport = Transport._id and Halt.name = '"+halt+"' and Transport.number = '"+cursor.getString(cursor.getColumnIndex("transport"))+"' and Transport.type = '"+cursor.getString(cursor.getColumnIndex("TYPE"))+"'",null);
+            if (forAdapter.getCount()>0){
+                forAdapter.moveToFirst();
+                transport_number.add(forAdapter.getString(forAdapter.getColumnIndex("number")));
+                type.add(forAdapter.getString(forAdapter.getColumnIndex("type")));
+                id2.add(forAdapter.getInt(forAdapter.getColumnIndex("_id")));
+                route.add(forAdapter.getString(forAdapter.getColumnIndex("route")));
+            }
+        }
+        forAdapter.close();
     }
 }
