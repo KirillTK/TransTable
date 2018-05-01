@@ -1,9 +1,13 @@
 package com.example.Map;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
+
 import com.example.kirill.stopping.R;
 
 public class MapActivity extends AppCompatActivity {
@@ -20,6 +24,7 @@ public class MapActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         String key = getIntent().getExtras().getString("number");
         getSupportActionBar().setTitle(key);
+        setColorSystemBar();
     }
 
     @Override
@@ -29,5 +34,17 @@ public class MapActivity extends AppCompatActivity {
             finish();
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setColorSystemBar(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            String type = getIntent().getExtras().getString("type");
+            switch (type){
+                case "A": window.setStatusBarColor(getResources().getColor(R.color.mapColor)); toolbar.setBackgroundColor(getResources().getColor(R.color.bus)); break;
+                case "Т": window.setStatusBarColor(getResources().getColor(R.color.systemBar2));toolbar.setBackgroundColor(getResources().getColor(R.color.troll)); break;
+            }
+        }
     }
 }

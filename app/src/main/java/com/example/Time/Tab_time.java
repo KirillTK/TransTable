@@ -2,6 +2,7 @@ package com.example.Time;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.support.design.widget.AppBarLayout;
 import android.support.design.widget.TabLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -16,6 +17,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 import com.example.kirill.stopping.DatabaseHelper;
 import com.example.kirill.stopping.R;
@@ -66,33 +69,39 @@ public class Tab_time extends AppCompatActivity{
                 appBarLayout.setBackgroundColor(getResources().getColor(R.color.bus));
                 toolbar.setBackgroundColor(getResources().getColor(R.color.bus));
                 tabLayout.setBackgroundColor(getResources().getColor(R.color.bus));
+                setColorSystemBar(getResources().getColor(R.color.mapColor));
                 break;
             case "Т":
                 appBarLayout.setBackgroundColor(getResources().getColor(R.color.troll));
                 toolbar.setBackgroundColor(getResources().getColor(R.color.troll));
                 tabLayout.setBackgroundColor(getResources().getColor(R.color.troll));
+                setColorSystemBar(getResources().getColor(R.color.systemBar2));
                 break;
 
             case "F":
                 appBarLayout.setBackgroundColor(getResources().getColor(R.color.favorite));
                 toolbar.setBackgroundColor(getResources().getColor(R.color.favorite));
                 tabLayout.setBackgroundColor(getResources().getColor(R.color.favorite));
+                setColorSystemBar(getResources().getColor(R.color.systemBar3));
                 break;
 
             case "N":
                 appBarLayout.setBackgroundColor(getResources().getColor(R.color.near));
                 toolbar.setBackgroundColor(getResources().getColor(R.color.near));
                 tabLayout.setBackgroundColor(getResources().getColor(R.color.near));
+                setColorSystemBar(getResources().getColor(R.color.systemBar4));
                 break;
         }
 
     }
 
-
-
-
-
-
+    public void setColorSystemBar(int color){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(color);
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

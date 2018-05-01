@@ -1,8 +1,12 @@
 package com.example.kirill.stopping;
 
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Window;
+import android.view.WindowManager;
+
 import com.ashokvarma.bottomnavigation.BottomNavigationBar;
 import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import com.example.Map.mapViewer;
@@ -15,11 +19,11 @@ public class Main_activity extends AppCompatActivity {
         @Override
         public void onTabSelected(int position) {
             switch (position){
-                case 0: getSupportFragmentManager().beginTransaction().replace(R.id.content, new Bus_fragment()).commit(); toolbar.setBackgroundColor(getResources().getColor(R.color.bus)); break;
-                case 1: getSupportFragmentManager().beginTransaction().replace(R.id.content,new Troll_fragment()).commit();toolbar.setBackgroundColor(getResources().getColor(R.color.troll)); break;
-                case 2: getSupportFragmentManager().beginTransaction().replace(R.id.content,new Favoutite_fragment()).commit(); toolbar.setBackgroundColor(getResources().getColor(R.color.favorite));break;
+                case 0: getSupportFragmentManager().beginTransaction().replace(R.id.content, new Bus_fragment()).commit(); toolbar.setBackgroundColor(getResources().getColor(R.color.bus)); setColorSystemBar(getResources().getColor(R.color.mapColor)); break;
+                case 1: getSupportFragmentManager().beginTransaction().replace(R.id.content,new Troll_fragment()).commit();toolbar.setBackgroundColor(getResources().getColor(R.color.troll)); setColorSystemBar(getResources().getColor(R.color.systemBar2)); break;
+                case 2: getSupportFragmentManager().beginTransaction().replace(R.id.content,new Favoutite_fragment()).commit(); toolbar.setBackgroundColor(getResources().getColor(R.color.favorite)); setColorSystemBar(getResources().getColor(R.color.systemBar3));break;
 //                case 3: getSupportFragmentManager().beginTransaction().replace(R.id.content,new mapViewer()).commit();toolbar.setBackgroundColor(getResources().getColor(R.color.colorPrimaryDark)); break;
-                case 3: getSupportFragmentManager().beginTransaction().replace(R.id.content,new NearHalt()).commit();toolbar.setBackgroundColor(getResources().getColor(R.color.near)); break;
+                case 3: getSupportFragmentManager().beginTransaction().replace(R.id.content,new NearHalt()).commit();toolbar.setBackgroundColor(getResources().getColor(R.color.near)); setColorSystemBar(getResources().getColor(R.color.systemBar4)); break;
             }
         }
 
@@ -58,6 +62,14 @@ public class Main_activity extends AppCompatActivity {
         refresh();
         bottomNavigationBar.setTabSelectedListener(mOnNavigationItemSelectedListener);
         getSupportFragmentManager().beginTransaction().replace(R.id.content, new Bus_fragment()).commitAllowingStateLoss();
+    }
+
+    public void setColorSystemBar(int color){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            Window window = getWindow();
+            window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+            window.setStatusBarColor(color);
+        }
     }
 
 }

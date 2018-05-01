@@ -16,4 +16,7 @@
     <color name="transparent">#80000000</color>
     <color name="Elements">#000000</color>
     <color name="activeElement">#fdd300</color>
+    <color name="systemBar2">#43A047</color>
+    <color name="systemBar3">#FF9800</color>
+    <color name="systemBar4">#26C6DA</color>
 </resources>
