@@ -62,7 +62,6 @@ public class NearTransportAdapter extends ArrayAdapter<String> {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
         String currenttime = simpleDateFormat.format(new Date());
         String sql = getSql(currenttime);
-//        String  sql  ="select time from Time where time_halt = "+id2+" and TIME(time) >= TIME('"+currenttime+"')";
         transport = database.rawQuery(sql,null);
         if(transport.moveToFirst()){
             String neartime = transport.getString(transport.getPosition());
