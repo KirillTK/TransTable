@@ -8,8 +8,9 @@
 
     <ImageView
         android:id="@+id/busStopIcon"
-        android:layout_width="120px"
-        android:layout_height="120px"
+        android:layout_width="45dp"
+        android:layout_height="60dp"
+        android:scaleType="centerCrop"
         android:layout_marginLeft="5px"
         android:layout_marginRight="5px"
         android:layout_marginTop="0px"></ImageView>
@@ -17,15 +18,16 @@
     <TextView
         android:id="@+id/stationName"
         android:layout_width="250dp"
-        android:layout_height="30dp"
-        android:layout_alignParentTop="true"
+        android:layout_height="35dp"
+        android:layout_alignBottom="@+id/busStopIcon"
+        android:layout_marginBottom="12dp"
         android:layout_toEndOf="@+id/busStopIcon"
         android:layout_toRightOf="@+id/busStopIcon"
         android:fontFamily="sans-serif"
         android:gravity="center_vertical"
         android:text="ExampleStation"
         android:textColor="@color/Elements"
-        android:textSize="15sp"></TextView>
+        android:textSize="14sp"></TextView>
 
     <com.like.LikeButton
         android:id="@+id/star_button"
