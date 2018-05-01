@@ -16,6 +16,7 @@ import com.example.kirill.stopping.R;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -60,7 +61,8 @@ public class NearTransportAdapter extends ArrayAdapter<String> {
         route.setText(route2.get(position));
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm");
         String currenttime = simpleDateFormat.format(new Date());
-        String  sql  ="select time from Time where time_halt = "+id2+" and TIME(time) >= TIME('"+currenttime+"')";
+        String sql = getSql(currenttime);
+//        String  sql  ="select time from Time where time_halt = "+id2+" and TIME(time) >= TIME('"+currenttime+"')";
         transport = database.rawQuery(sql,null);
         if(transport.moveToFirst()){
             String neartime = transport.getString(transport.getPosition());
@@ -96,5 +98,19 @@ public class NearTransportAdapter extends ArrayAdapter<String> {
         int sum = 0;
         sum = h*60+m;
         return sum;
+    }
+
+    public String getSql(String currenttime){
+        String sql = "";
+        if (Calendar.getInstance().get(Calendar.DAY_OF_WEEK) == Calendar.SUNDAY)
+        {
+            Log.d("week","Выходной");
+            sql  ="select time from Time_hollyday where time_halt = "+id2+" and TIME(time) >= TIME('"+currenttime+"')";
+
+        } else {
+            Log.d("week","Будний");
+            sql  ="select time from Time where time_halt = "+id2+" and TIME(time) >= TIME('"+currenttime+"')";
+            }
+        return sql;
     }
 }
