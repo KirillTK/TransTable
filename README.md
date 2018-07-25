@@ -1,5 +1,4 @@
 # TransTable
-Screenshots
 ![screen1](https://user-images.githubusercontent.com/35868628/43217278-e2aab990-9049-11e8-9836-d47246083846.PNG)
 ![screen2](https://user-images.githubusercontent.com/35868628/43217280-e4787c80-9049-11e8-958b-7187fa7d0316.PNG)
 ![screen3](https://user-images.githubusercontent.com/35868628/43217283-e5ff4458-9049-11e8-9e78-47913b06b493.PNG)
